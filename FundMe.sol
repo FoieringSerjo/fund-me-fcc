@@ -86,3 +86,120 @@ contract FundMe {
 // 7. Yul / Assembly
 
 
+// Get funds from users
+// Withdraw funds
+// Set a minimum funding value in USD
+
+// SPDX-License-Identifier: MIT
+// pragma solidity ^0.8.0;
+
+// // 693,155
+// // 673,649 with constant
+// // 650,746 with immutable
+// import "./PriceConverter.sol";
+
+// // interface AggregatorV3Interface {
+// //     function decimals() external view returns (uint8);
+
+// //     function description() external view returns (string memory);
+
+// //     function version() external view returns (uint256);
+
+// //     function getRoundData(uint80 _roundId)
+// //         external
+// //         view
+// //         returns (
+// //             uint80 roundId,
+// //             int256 answer,
+// //             uint256 startedAt,
+// //             uint256 updatedAt,
+// //             uint80 answeredInRound
+// //         );
+
+// //     function latestRoundData()
+// //         external
+// //         view
+// //         returns (
+// //             uint80 roundId,
+// //             int256 answer,
+// //             uint256 startedAt,
+// //             uint256 updatedAt,
+// //             uint80 answeredInRound
+// //         );
+// // }
+
+// error NotOwner(); //https://blog.soliditylang.org/2021/04/21/custom-errors/
+
+// contract FundMe {
+//     using PriceConverter for uint256;
+
+//     uint256 public constant MINIMUM_USD = 50 * 1e18;
+
+//     address[] public funders;
+//     mapping(address => uint256) public addressToAmountFunded;
+
+//     address public immutable i_owner;
+
+//     constructor() {
+//         i_owner = msg.sender;
+//     }
+
+//     function fund() public payable {
+//         // Want to be able to set a minimum fund amount
+//         // 1. How to send ETH to this contract?
+//         require(
+//             msg.value.getConversionRate() >= MINIMUM_USD,
+//             "Didn't sent enough"
+//         ); // 1e18 == 1* 10 ** 18 == 1000000000000000000
+//         funders.push(msg.sender);
+//         addressToAmountFunded[msg.sender] = msg.value;
+
+//         // What is reverting? - Undo any action before and send remaining gas back.
+//     }
+
+//     function Withdraw() public onlyOwner {
+//         /* starting index, ending index, step amount*/
+//         for (
+//             uint256 funderIndex = 0;
+//             funderIndex < funders.length;
+//             funderIndex++
+//         ) {
+//             address funder = funders[funderIndex];
+//             addressToAmountFunded[funder] = 0;
+//         }
+//         // reset the array
+//         funders = new address[](0);
+//         // actually withdraw the funds
+
+//         // transfer
+//         // msg.sender = address
+//         // payble(msg.sender) = payable address
+//         // payable(msg.sender).transfer(address(this).balance);
+
+//         // send
+//         // bool sendSuccess = payable(msg.sender).send(address(this).balance);
+//         // require(sendSuccess, "Send failed");
+
+//         // call
+//         (bool callSuccess, ) = payable(msg.sender).call{
+//             value: address(this).balance
+//         }("");
+//         require(callSuccess, "Call failed");
+//     }
+
+//     modifier onlyOwner() {
+//         // require(msg.sender == i_owner, "Sender is not owner");
+//         if (msg.sender != i_owner) {
+//             revert NotOwner();
+//         }
+//         _;
+//     }
+
+//     fallback() external payable {
+//         fund();
+//     }
+
+//     receive() external payable {
+//         fund();
+//     }
+// }
