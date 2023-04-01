@@ -76,19 +76,6 @@ contract FundMe {
 
 }
 
-// Concepts we didn't cover yet (will cover in later sections)
-// 1. Enum
-// 2. Events
-// 3. Try / Catch
-// 4. Function Selector
-// 5. abi.encode / decode
-// 6. Hash with keccak256
-// 7. Yul / Assembly
-
-
-// Get funds from users
-// Withdraw funds
-// Set a minimum funding value in USD
 
 // SPDX-License-Identifier: MIT
 // pragma solidity ^0.8.0;
